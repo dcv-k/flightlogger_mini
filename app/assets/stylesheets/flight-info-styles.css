@@ -1,0 +1,264 @@
+/* Flight Info Tab Custom Styles */
+
+.flight-info-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.flight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.flight-time-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.utc-time {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.callsign {
+    font-weight: bold;
+    color: #064983;
+}
+
+.fuel-info {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.aircraft-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.aircraft-reg {
+    font-weight: bold;
+    color: #064983;
+    font-size: 1.1rem;
+}
+
+.fuel-inputs {
+    display: flex;
+    gap: 1rem;
+}
+
+.fuel-input {
+    width: 80px;
+    padding: 0.25rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.flight-type-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.flight-type-btn {
+    padding: 0.75rem 2rem;
+    border: 2px solid #dee2e6;
+    background: white;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px;
+}
+
+.flight-type-btn.active {
+    background: #0077c1;
+    color: white;
+    border-color: #0077c1;
+}
+
+.flight-type-btn:hover:not(.active) {
+    border-color: #0077c1;
+    color: #0077c1;
+}
+
+.flight-times-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.time-block {
+    background: #e3f2fd;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.time-label {
+    font-weight: bold;
+    color: #064983;
+    margin-bottom: 0.5rem;
+}
+
+.time-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.time-input {
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.date-input {
+    padding: 0.25rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.block-status {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 0.5rem;
+}
+
+.duration-block {
+    background: #fff3e0;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.duration-time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f57c00;
+}
+
+.departure-arrival-section {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.departure-arrival-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.departure-arrival-row label {
+    min-width: 200px;
+    font-weight: bold;
+    color: #064983;
+}
+
+.airport-select {
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    min-width: 120px;
+    font-weight: bold;
+}
+
+.day-indicator {
+    background: #28a745;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.add-landing-btn, .add-flight-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.add-landing-btn:hover, .add-flight-btn:hover {
+    background: #218838;
+}
+
+.add-flight-btn {
+    display: block;
+    margin: 0 auto;
+    background: #17a2b8;
+}
+
+.add-flight-btn:hover {
+    background: #138496;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .flight-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .fuel-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .flight-type-selector {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .flight-type-btn {
+        flex: 1;
+        min-width: 80px;
+        padding: 0.5rem 1rem;
+    }
+
+    .flight-times-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .departure-arrival-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .departure-arrival-row label {
+        min-width: auto;
+    }
+}

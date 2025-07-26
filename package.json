@@ -1,0 +1,13 @@
+{
+  "name": "flightlogger_mini",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "dependencies": {
+    "controllers": "^0.0.2"
+  }
+}

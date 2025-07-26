@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  'off': 2025-07-26 18:30:34
+  to: 2025-07-26 18:30:34
+  lan: 2025-07-26 18:30:34
+  'on': 2025-07-26 18:30:34
+  status: MyString
+  eta: 2025-07-26 18:30:34
+  lesson: one
+
+two:
+  'off': 2025-07-26 18:30:34
+  to: 2025-07-26 18:30:34
+  lan: 2025-07-26 18:30:34
+  'on': 2025-07-26 18:30:34
+  status: MyString
+  eta: 2025-07-26 18:30:34
+  lesson: two
