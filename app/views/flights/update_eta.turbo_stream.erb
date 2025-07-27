@@ -1,0 +1,10 @@
+<%= turbo_stream.replace "side-panel-eta" do %>
+  <%= render 'flights/eta_display', flight: @flight %>
+<% end %>
+
+<!-- Update the table ETA cell -->
+<%= turbo_stream.replace "flights-table-eta-#{@flight.id}" do %>
+  <td class="flight-eta" id="flights-table-eta-<%= @flight.id %>">
+    <%= @flight.eta&.strftime("%H:%M") || "12:10" %>
+  </td>
+<% end %>

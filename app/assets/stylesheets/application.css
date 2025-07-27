@@ -1,10 +1,592 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+header {
+    background-color: #064983;
+    color: white;
+    padding: 0.25rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* PDF Modal Styles */
+#pdf-modal {
+    display: none;                /* hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);  /* semi-transparent black */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#pdf-modal.active {
+    display: flex;                /* show the modal as flex container */
+}
+
+#pdf-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 90%;
+    overflow: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+nav {
+    background-color: #0077c1;
+    padding: 0.25rem 2rem;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav a {
+    color: white;
+    margin-right: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+main {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 96px);
+    margin-left: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% - 140px);
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* Tab styling */
+#tab-panel {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.tab-buttons {
+    background: #f8f9fa;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.tab-buttons button {
+    padding: 16px 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.tab-buttons button:hover {
+    background: rgba(0,119,193,0.1);
+}
+
+.tab-buttons button.active {
+    background: #0077c1;
+    color: white;
+    border-bottom-color: #064983;
+}
+
+.tab-content {
+    padding: 3rem;
+}
+
+/* Tab content sections */
+#tab-panel section {
+    padding: 3rem;
+}
+
+/* Lesson header */
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.lesson-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #064983;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lesson-arrow {
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+.vfr-dual {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.export-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.export-btn:hover {
+    background: #5a6268;
+}
+
+/* Pre-lesson notice */
+.pre-lesson-notice {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: #856404;
+}
+
+/* Section styling */
+.section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #064983;
+    margin-bottom: 0.75rem;
+}
+
+.section-content {
+    color: #495057;
+    line-height: 1.6;
+}
+
+/* Links styling */
+.prep-links {
+    list-style: none;
+    padding: 0;
+}
+
+.prep-links li {
+    margin-bottom: 0.5rem;
+}
+
+.prep-link {
+    color: #0077c1;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.prep-link:hover {
+    text-decoration: underline;
+}
+
+.prep-link:before {
+    content: "- ";
+    color: #6c757d;
+}
+
+/* Objectives list */
+.objectives-list {
+    list-style: none;
+    padding: 0;
+}
+
+.objectives-list li {
+    margin-bottom: 0.4rem;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.objectives-list li:before {
+    content: "- ";
+    color: #6c757d;
+}
+
+/* Grading explanation */
+.grading-levels {
+    margin-top: 1rem;
+}
+
+.grading-level {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+    background: #f8f9fa;
+    border-left: 4px solid #dee2e6;
+    font-size: 0.9rem;
+}
+
+.grading-level.level-1 { border-left-color: #dc3545; }
+.grading-level.level-2 { border-left-color: #fd7e14; }
+.grading-level.level-3 { border-left-color: #ffc107; }
+.grading-level.level-4 { border-left-color: #20c997; }
+.grading-level.level-5 { border-left-color: #28a745; }
+
+.level-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dee2e6;
+}
+
+/* Briefing timer */
+.briefing-timer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #e9ecef;
+    border-radius: 4px;
+}
+
+.timer-input {
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.timer-btn {
+    background: #0077c1;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+
+/* Attachments section */
+.attachments {
+    margin-top: 2rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.attachments-header {
+    background: #e9ecef;
+    padding: 0.75rem 1rem;
+    font-weight: bold;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.attachments-content {
+    padding: 1rem;
+}
+
+.attachment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.attachment-row:last-child {
+    border-bottom: none;
+}
+
+.attachment-name {
+    color: #0077c1;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.attachment-name:hover {
+    text-decoration: underline;
+}
+
+.attachment-modified {
+    color: #6c757d;
+    font-size: 0.8rem;
+}
+
+.lesson-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Flights table styles */
+.flights-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.flights-header {
+    background: #f8f9fa;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.flights-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flights-date-time {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.flights-controls {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.history-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.arrivals-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    cursor: pointer;
+}
+
+.dropdown-arrows {
+    color: #6c757d;
+}
+
+.flights-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #064983;
+    margin: 0;
+}
+
+.flights-content {
+    padding: 0;
+}
+
+.flights-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.flights-table th {
+    background: #e9ecef;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 0.85rem;
+}
+
+.flights-table th.sortable {
+    cursor: pointer;
+}
+
+.flights-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.85rem;
+}
+
+.flights-table tr.flight-row {
+    background: white;
+}
+
+.flights-table tr.flight-row.alternate {
+    background: #fffbf0;
+}
+
+.flights-table tr.flight-row:hover {
+    background-color: #f8f9fa;
+}
+
+.flight-aircraft {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.flight-time {
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.flight-eta {
+    font-family: monospace;
+    color: #0077c1;
+}
+
+.eta-old {
+    text-decoration: line-through;
+    color: #6c757d;
+    margin-right: 0.5rem;
+}
+
+.eta-new.early {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.eta-new.delayed {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.time-progress {
+    width: 100px;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+}
+
+.time-text {
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+}
+
+.flight-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-flight {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-early {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.status-delayed {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #495057;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: #f8f9fa;
+}

@@ -34,4 +34,22 @@ end
   )
 end
 
+# Create a lesson first
+lesson = Lesson.create!(
+  lesson_number: "Lesson 11"
+)
+
+# Create a flight with ETA
+Flight.create!(
+  lesson: lesson,
+  off: DateTime.parse("2024-03-19 11:45:00"),
+  to: DateTime.parse("2024-03-19 11:50:00"),
+  lan: DateTime.parse("2024-03-19 12:05:00"),
+  on: DateTime.parse("2024-03-19 12:10:00"),
+  eta: DateTime.parse("2024-03-19 12:10:00"),
+  status: "en_route"
+)
+
+puts "Flight record created with ETA: 12:10"
+
 puts "Seed complete."

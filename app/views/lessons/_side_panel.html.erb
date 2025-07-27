@@ -1,0 +1,48 @@
+<div class="flight-timeline-panel">
+  <div class="timeline-item">
+    <div class="timeline-arrow">›</div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-label">OFF</div>
+    <div class="timeline-time">10:10</div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-label">TO</div>
+    <div class="timeline-time">10:20</div>
+  </div>
+
+  <div class="timeline-item active">
+    <div class="timeline-label">LAN</div>
+    <div class="timeline-time">12:05</div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-label">ON</div>
+    <div class="timeline-time">12:10</div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-label">Status</div>
+    <div class="timeline-icon">✈</div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-label">T</div>
+  </div>
+
+  <% flight = Flight.first %>
+  <% if flight %>
+    <%= render 'flights/eta_display', flight: flight %>
+  <% else %>
+    <div class="timeline-item eta-item" id="side-panel-eta">
+      <div class="timeline-label">ETA</div>
+      <div class="eta-controls">
+        <button class="eta-btn" onclick="adjustETA(-5)">-</button>
+        <div class="timeline-time eta-time">12:10</div>
+        <button class="eta-btn" onclick="adjustETA(5)">+</button>
+      </div>
+    </div>
+  <% end %>
+</div>

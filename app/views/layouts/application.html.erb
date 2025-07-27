@@ -10,653 +10,96 @@
   <%= stylesheet_link_tag "side-panel-styles", media: "all", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 
-  <style>
-      body {
-          margin: 0;
-          font-family: Arial, sans-serif;
-          background-color: #f8f9fa;
-      }
-      header {
-          background-color: #064983;
-          color: white;
-          padding: 1rem 2rem;
-          font-size: 1.5rem;
-          font-weight: bold;
-      }
-      /* PDF Modal Styles */
-      #pdf-modal {
-          display: none;                /* hidden by default */
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);  /* semi-transparent black */
-          justify-content: center;
-          align-items: center;
-          z-index: 9999;
+  <script>
+      function adjustETA(flightId, minutes) {
+          // Make a PATCH request to update the ETA
+          fetch(`/flights/${flightId}/update_eta`, {
+              method: 'PATCH',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                  'Accept': 'text/vnd.turbo-stream.html'
+              },
+              body: `minutes=${minutes}`
+          })
+              .then(response => {
+                  console.log('Response status:', response.status);
+                  console.log('Response headers:', response.headers.get('content-type'));
+
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.text();
+              })
+              .then(html => {
+                  console.log('Received HTML:', html);
+                  // Turbo will automatically handle the stream response
+                  if (html.trim()) {
+                      Turbo.renderStreamMessage(html);
+                  } else {
+                      console.warn('Received empty response');
+                  }
+              })
+              .catch(error => {
+                  console.error('Error updating ETA:', error);
+              });
       }
 
-      #pdf-modal.active {
-          display: flex;                /* show the modal as flex container */
-      }
+      // Alternative simpler approach using Rails UJS if you prefer
+      function adjustETASimple(flightId, minutes) {
+          const form = document.createElement('form');
+          form.method = 'PATCH';
+          form.action = `/flights/${flightId}/update_eta`;
+          form.style.display = 'none';
 
-      #pdf-modal-content {
-          background-color: white;
-          padding: 20px;
-          border-radius: 5px;
-          width: 80%;
-          max-width: 700px;
-          max-height: 90%;
-          overflow: auto;
-          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      }
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'authenticity_token';
+          csrfInput.value = csrfToken;
 
-      nav {
-          background-color: #0077c1;
-          padding: 0.5rem 2rem;
-      }
-      nav a {
-          color: white;
-          margin-right: 2rem;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 1rem;
-      }
-      nav a:hover {
-          text-decoration: underline;
-      }
-      main {
-          padding: 2rem;
-          background-color: #f8f9fa;
-          min-height: calc(100vh - 96px);
-      }
+          const minutesInput = document.createElement('input');
+          minutesInput.type = 'hidden';
+          minutesInput.name = 'minutes';
+          minutesInput.value = minutes;
 
-      /* Tab styling */
-      #tab-panel {
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          overflow: hidden;
+          form.appendChild(csrfInput);
+          form.appendChild(minutesInput);
+          document.body.appendChild(form);
+
+          form.submit();
+          document.body.removeChild(form);
       }
-
-      .tab-buttons {
-          background: #e9ecef;
-          padding: 0;
-          margin: 0;
-          display: flex;
-          border-bottom: 1px solid #dee2e6;
-      }
-
-      .tab-buttons button {
-          padding: 12px 24px;
-          border: none;
-          background: transparent;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 500;
-          color: #495057;
-          border-bottom: 3px solid transparent;
-          transition: all 0.2s;
-      }
-
-      .tab-buttons button:hover {
-          background: rgba(0,119,193,0.1);
-      }
-
-      .tab-buttons button.active {
-          background: #0077c1;
-          color: white;
-          border-bottom-color: #064983;
-      }
-
-      .tab-content {
-          padding: 2rem;
-      }
-
-      /* Lesson header */
-      .lesson-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.5rem;
-          padding-bottom: 1rem;
-          border-bottom: 1px solid #dee2e6;
-      }
-
-      .lesson-title {
-          font-size: 1.5rem;
-          font-weight: bold;
-          color: #064983;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-      }
-
-      .lesson-arrow {
-          color: #28a745;
-          font-size: 1.2rem;
-      }
-
-      .vfr-dual {
-          color: #6c757d;
-          font-size: 0.9rem;
-          margin-top: 0.25rem;
-      }
-
-      .export-btn {
-          background: #6c757d;
-          color: white;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          cursor: pointer;
-      }
-
-      .export-btn:hover {
-          background: #5a6268;
-      }
-
-      /* Pre-lesson notice */
-      .pre-lesson-notice {
-          background: #fff3cd;
-          border: 1px solid #ffeaa7;
-          border-radius: 4px;
-          padding: 1rem;
-          margin-bottom: 2rem;
-          color: #856404;
-      }
-
-      /* Section styling */
-      .section {
-          margin-bottom: 2rem;
-      }
-
-      .section-title {
-          font-size: 1.1rem;
-          font-weight: bold;
-          color: #064983;
-          margin-bottom: 0.75rem;
-      }
-
-      .section-content {
-          color: #495057;
-          line-height: 1.6;
-      }
-
-      /* Links styling */
-      .prep-links {
-          list-style: none;
-          padding: 0;
-      }
-
-      .prep-links li {
-          margin-bottom: 0.5rem;
-      }
-
-      .prep-link {
-          color: #0077c1;
-          text-decoration: none;
-          font-size: 0.9rem;
-      }
-
-      .prep-link:hover {
-          text-decoration: underline;
-      }
-
-      .prep-link:before {
-          content: "- ";
-          color: #6c757d;
-      }
-
-      /* Objectives list */
-      .objectives-list {
-          list-style: none;
-          padding: 0;
-      }
-
-      .objectives-list li {
-          margin-bottom: 0.4rem;
-          color: #495057;
-          font-size: 0.9rem;
-      }
-
-      .objectives-list li:before {
-          content: "- ";
-          color: #6c757d;
-      }
-
-      /* Grading explanation */
-      .grading-levels {
-          margin-top: 1rem;
-      }
-
-      .grading-level {
-          margin-bottom: 0.5rem;
-          padding: 0.25rem;
-          background: #f8f9fa;
-          border-left: 4px solid #dee2e6;
-          font-size: 0.9rem;
-      }
-
-      .grading-level.level-1 { border-left-color: #dc3545; }
-      .grading-level.level-2 { border-left-color: #fd7e14; }
-      .grading-level.level-3 { border-left-color: #ffc107; }
-      .grading-level.level-4 { border-left-color: #20c997; }
-      .grading-level.level-5 { border-left-color: #28a745; }
-
-      .level-title {
-          font-weight: bold;
-          margin-bottom: 0.5rem;
-      }
-
-      .profile-picture {
-          width: 100px;
-          height: 100px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 2px solid #dee2e6;
-      }
-
-      /* Briefing timer */
-      .briefing-timer {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          margin: 1.5rem 0;
-          padding: 1rem;
-          background: #e9ecef;
-          border-radius: 4px;
-      }
-
-      .timer-input {
-          padding: 0.5rem;
-          border: 1px solid #ced4da;
-          border-radius: 4px;
-          width: 80px;
-      }
-
-      .timer-btn {
-          background: #0077c1;
-          color: white;
-          border: none;
-          padding: 0.5rem 1rem;
-          border-radius: 4px;
-          cursor: pointer;
-      }
-
-      /* Header */
-      .header {
-          background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-          color: white;
-          padding: 1rem 2rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-
-      .header h1 {
-          font-size: 1.5rem;
-          font-weight: 600;
-      }
-
-      .header-right {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-      }
-
-      .user-info {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.9rem;
-      }
-
-
-      /* Attachments section */
-      .attachments {
-          margin-top: 2rem;
-          background: #f8f9fa;
-          border-radius: 4px;
-          overflow: hidden;
-      }
-
-      .attachments-header {
-          background: #e9ecef;
-          padding: 0.75rem 1rem;
-          font-weight: bold;
-          color: #495057;
-          border-bottom: 1px solid #dee2e6;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-      }
-
-      .attachments-content {
-          padding: 1rem;
-      }
-
-      .attachment-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0.5rem 0;
-          border-bottom: 1px solid #dee2e6;
-      }
-
-      .attachment-row:last-child {
-          border-bottom: none;
-      }
-
-      .attachment-name {
-          color: #0077c1;
-          text-decoration: none;
-          font-size: 0.9rem;
-      }
-
-      .attachment-name:hover {
-          text-decoration: underline;
-      }
-
-      .attachment-modified {
-          color: #6c757d;
-          font-size: 0.8rem;
-      }
-
-      .lesson-info {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-      }
-  </style>
+  </script>
 </head>
 
 <body>
-<header class="header">
-  <h1>FlightLogger Pilot Academy</h1>
-  <div class="header-right">
-    <div class="user-info">
-      <span>👤 User</span>
-      <span>❓</span>
-    </div>
-  </div>
-</header>
-
-<nav>
-  <a href="/users">Users</a>
-  <a href="/warnings">Warnings</a>
-  <%= link_to "flights", flights_path, class: ("active" if controller_name == "flights") %>
-  <a href="/admin">Admin</a>
-</nav>
+<%= render 'lessons/header_nav' %>
 
 <main>
-  <div class="flight-timeline-panel">
-    <div class="timeline-item">
-      <div class="timeline-arrow">›</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-label">OFF</div>
-      <div class="timeline-time">10:10</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-label">TO</div>
-      <div class="timeline-time">10:20</div>
-    </div>
-
-    <div class="timeline-item active">
-      <div class="timeline-label">LAN</div>
-      <div class="timeline-time">12:05</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-label">ON</div>
-      <div class="timeline-time">12:10</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-label">Status</div>
-      <div class="timeline-icon">✈</div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-label">T</div>
-    </div>
-
-    <div class="timeline-item eta-item">
-      <div class="timeline-label">ETA</div>
-      <div class="eta-controls">
-        <button class="eta-btn" onclick="adjustETA(-5)">-</button>
-        <div class="timeline-time eta-time">12:05</div>
-        <button class="eta-btn" onclick="adjustETA(5)">+</button>
-      </div>
-    </div>
-  </div>
+  <%= render 'lessons/side_panel' %>
   <div id="tab-panel" data-controller="tabs">
-    <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="briefing" class="active">Briefing</button>
-    <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="goals">Goals</button>
-    <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flight-info">Flight Info</button>
+    <div class="tab-buttons">
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="briefing" class="active">Briefing</button>
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="goals">Goals</button>
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flight-info">Flight Info</button>
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flights">Flights</button>
+    </div>
 
     <section data-tabs-target="content" data-tab="briefing">
-      <div class="lesson-header">
-        <div  class="lesson-info">
-          <img src="https://i.pinimg.com/736x/d0/bd/75/d0bd75d696c24253593c0381967e443d.jpg" alt="Profile Picture" class="profile-picture">
-          <div>
-            <div class="lesson-title">
-              Lesson 12 <span class="lesson-arrow">↗</span>
-            </div>
-            <div class="vfr-dual">VFR dual: 2:00</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pre-lesson-notice">
-        <strong>Read the lesson preparation before the lesson begins</strong>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Lesson Preparation</div>
-        <div class="section-content">
-          <ul class="prep-links">
-            <div data-controller="pdfmodal">
-              <li><a href="#" class="prep-link" data-turbo="false" data-action="click->pdfmodal#open" data-filename="preflight">Preflight</a></li>
-              <li><a href="#" class="prep-link" data-action="click->pdfmodal#open" data-filename="was-sheet">Prepare WAS sheet</a></li>
-              <li><a href="#" class="prep-link" data-action="click->pdfmodal#open" data-filename="performance-calc">Performance calculations</a></li>
-              <li><a href="#" class="prep-link" data-action="click->pdfmodal#open" data-filename="poh">Pilot Operating Handbook</a></li>
-              <li><a href="#" class="prep-link" data-action="click->pdfmodal#open" data-filename="c172-checklist">C172 Checklist</a></li>
-
-              <div id="pdf-modal"
-                   data-pdfmodal-target="modal">
-                <div id="pdf-modal-content">
-                  <button data-action="click->pdfmodal#close">Close</button>
-                  <iframe data-pdfmodal-target="viewer"
-                          src=""
-                          width="100%"
-                          height="500px">
-                  </iframe>
-                </div>
-              </div>
-            </div>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Objectives</div>
-        <div class="section-content">
-          <ul class="objectives-list">
-            <li>Pre-flight</li>
-            <li>Start checklist</li>
-            <li>Engine start</li>
-            <li>Taxiing</li>
-            <li>Solo prep</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Video briefings</div>
-        <div class="section-content">
-          <a href="#" class="prep-link">Weather briefing</a>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Grading explanation</div>
-        <div class="section-content">
-          <div class="grading-levels">
-            <div class="grading-level level-1">
-              <div class="level-title">Level 1: Unsatisfactory</div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget lobortis sapien. Donec augue nibh, pellentesque quis viverra sed, interdum quis purus. Phasellus non turpis in orci feugiat dignissim a vel risus. Mauris volutpat justo et nulla mattis tristique. Pellentesque ut sagittis ipsum, imperdiet tempus diam.
-            </div>
-            <div class="grading-level level-2">
-              <div class="level-title">Level 2: Satisfactory</div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget lobortis sapien. Donec augue nibh, pellentesque quis viverra sed, interdum quis purus. Phasellus non turpis in orci feugiat dignissim a vel risus. Mauris volutpat tempus diam.
-            </div>
-            <div class="grading-level level-3">
-              <div class="level-title">Level 3: Good</div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget lobortis sapien. Donec augue nibh, pellentesque quis viverra sed, interdum quis purus. Phasellus non turpis in orci feugiat dignissim a vel risus. Mauris volutpat justo et nulla mattis tristique. Pellentesque ut sagittis.
-            </div>
-            <div class="grading-level level-4">
-              <div class="level-title">Level 4: Very Good</div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget lobortis sapien. Donec augue nibh, pellentesque quis viverra sed, interdum quis purus. Phasellus non turpis in orci feugiat dignissim a vel risus. Mauris nulla mattis tristique. Pellentesque ut sagittis ipsum, imperdiet tempus diam.
-            </div>
-            <div class="grading-level level-5">
-              <div class="level-title">Level 5: Excellent</div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget lobortis sapien. Donec augue nibh, pellentesque quis viverra sed, interdum quis purus. Phasellus non turpis in orci feugiat dignissim a vel risus. Mauris volutpat justo et nulla mattis tristique. Pellentesque ut sagittis ipsum, imperdiet tempus diam.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="attachments">
-        <div class="attachments-header" onclick="toggleAttachments()">
-          ▼ Attachments
-        </div>
-        <div class="attachments-content" id="attachments-content">
-          <div class="attachment-row">
-            <a href="#" class="attachment-name" onclick="openPDF('lesson11-card')">📄 Lesson 11 - Lesson Card</a>
-            <span class="attachment-modified">Modified: 2024-03-15</span>
-          </div>
-          <div class="attachment-row">
-            <a href="#" class="attachment-name" onclick="openPDF('was-worksheet')">📄 WAS Worksheet</a>
-            <span class="attachment-modified">Modified: 2024-03-10</span>
-          </div>
-          <div class="attachment-row">
-            <a href="#" class="attachment-name" onclick="openPDF('performance-charts')">📄 Performance Charts</a>
-            <span class="attachment-modified">Modified: 2024-03-08</span>
-          </div>
-        </div>
-      </div>
+      <%= render 'lessons/briefing' %>
     </section>
 
     <section data-tabs-target="content" data-tab="goals" hidden>
-      <h2>Goals Content Here</h2>
-      <p>Lesson goals and grading info.</p>
+      <%= render 'lessons/goals' %>
     </section>
 
     <section data-tabs-target="content" data-tab="flight-info" hidden>
-      <div class="flight-info-container">
-        <!-- Flight Header -->
-        <div class="flight-header">
-          <div class="flight-time-info">
-            <div class="utc-time">(UTC+02:00)</div>
-            <div class="callsign">CALLSIGN</div>
-            <div class="fuel-info">
-              <span>Fuel added (USG)</span>
-              <span>DEPARTURE FUEL (USG)</span>
-            </div>
-          </div>
-          <div class="aircraft-info">
-            <div class="aircraft-reg">OY-AAA</div>
-            <div class="fuel-inputs">
-              <input type="number" value="0" class="fuel-input">
-              <input type="number" value="76.5" class="fuel-input">
-            </div>
-          </div>
-        </div>
+      <%= render 'flights/flight_info' %>
+    </section>
 
-        <!-- Flight Type Selector -->
-        <div class="flight-type-selector">
-          <button class="flight-type-btn active" data-type="dual">DUAL</button>
-          <button class="flight-type-btn" data-type="vfr">VFR</button>
-          <button class="flight-type-btn" data-type="day">DAY</button>
-          <button class="flight-type-btn" data-type="local">LOCAL</button>
-        </div>
-
-        <!-- Flight Times Grid -->
-        <div class="flight-times-grid">
-          <!-- Off Block -->
-          <div class="time-block">
-            <div class="time-label">Off block</div>
-            <div class="time-input-group">
-              <input type="time" value="10:10" class="time-input">
-              <input type="date" value="2021-05-06" class="date-input">
-            </div>
-            <div class="block-status">On block</div>
-          </div>
-
-          <!-- Takeoff -->
-          <div class="time-block">
-            <div class="time-label">Takeoff</div>
-            <div class="time-input-group">
-              <input type="time" value="10:20" class="time-input">
-              <input type="date" value="2021-05-06" class="date-input">
-            </div>
-            <div class="block-status">Landing</div>
-          </div>
-
-          <!-- Duration Display -->
-          <div class="duration-block">
-            <div class="duration-time">2h 00m</div>
-          </div>
-
-          <div class="duration-block">
-            <div class="duration-time">1h 45m</div>
-          </div>
-
-          <!-- Second Row Times -->
-          <div class="time-block">
-            <div class="time-input-group">
-              <input type="time" value="12:10" class="time-input">
-              <input type="date" value="2021-05-06" class="date-input">
-            </div>
-          </div>
-
-          <div class="time-block">
-            <div class="time-input-group">
-              <input type="time" value="12:05" class="time-input">
-              <input type="date" value="2021-05-06" class="date-input">
-            </div>
-          </div>
-        </div>
-
-        <!-- Departure/Arrival Section -->
-        <div class="departure-arrival-section">
-          <div class="departure-arrival-row">
-            <label>DEPARTURE</label>
-            <select class="airport-select">
-              <option>EKAH</option>
-            </select>
-          </div>
-          <div class="departure-arrival-row">
-            <label>ARRIVAL (1 full stop)</label>
-            <select class="airport-select">
-              <option>EKAH</option>
-            </select>
-            <span class="day-indicator">DAY</span>
-          </div>
-          <button class="add-landing-btn">+ Add landing</button>
-        </div>
-
-        <!-- Add Flight Button -->
-        <button class="add-flight-btn">+ Add flight</button>
-      </div>
+    <section data-tabs-target="content" data-tab="flights" hidden>
+      <%= render 'flights/flights_table' %>
     </section>
   </div>
 </main>

@@ -1,0 +1,96 @@
+<div class="flight-info-container">
+  <!-- Flight Header -->
+  <div class="flight-header">
+    <div class="flight-time-info">
+      <div class="utc-time">(UTC+02:00)</div>
+      <div class="callsign">CALLSIGN</div>
+      <div class="fuel-info">
+        <span>Fuel added (USG)</span>
+        <span>DEPARTURE FUEL (USG)</span>
+      </div>
+    </div>
+    <div class="aircraft-info">
+      <div class="aircraft-reg">OY-AAA</div>
+      <div class="fuel-inputs">
+        <input type="number" value="0" class="fuel-input">
+        <input type="number" value="76.5" class="fuel-input">
+      </div>
+    </div>
+  </div>
+
+  <!-- Flight Type Selector -->
+  <div class="flight-type-selector">
+    <button class="flight-type-btn active" data-type="dual">DUAL</button>
+    <button class="flight-type-btn" data-type="vfr">VFR</button>
+    <button class="flight-type-btn" data-type="day">DAY</button>
+    <button class="flight-type-btn" data-type="local">LOCAL</button>
+  </div>
+
+  <!-- Flight Times Grid -->
+  <div class="flight-times-grid">
+    <!-- Off Block -->
+    <div class="time-block">
+      <div class="time-label">Off block</div>
+      <div class="time-input-group">
+        <input type="time" value="10:10" class="time-input">
+        <input type="date" value="2021-05-06" class="date-input">
+      </div>
+      <div class="block-status">On block</div>
+    </div>
+
+    <!-- Takeoff -->
+    <div class="time-block">
+      <div class="time-label">Takeoff</div>
+      <div class="time-input-group">
+        <input type="time" value="10:20" class="time-input">
+        <input type="date" value="2021-05-06" class="date-input">
+      </div>
+      <div class="block-status">Landing</div>
+    </div>
+
+    <!-- Duration Display -->
+    <div class="duration-block">
+      <div class="duration-time">2h 00m</div>
+    </div>
+
+    <div class="duration-block">
+      <div class="duration-time">1h 45m</div>
+    </div>
+
+    <!-- Second Row Times -->
+    <div class="time-block">
+      <div class="time-input-group">
+        <input type="time" value="12:10" class="time-input">
+        <input type="date" value="2021-05-06" class="date-input">
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-input-group">
+        <input type="time" value="12:05" class="time-input">
+        <input type="date" value="2021-05-06" class="date-input">
+      </div>
+    </div>
+  </div>
+
+  <!-- Departure/Arrival Section -->
+  <div class="departure-arrival-section">
+    <div class="departure-arrival-row">
+      <label>DEPARTURE</label>
+      <select class="airport-select">
+        <option>EKAH</option>
+      </select>
+    </div>
+    <div class="departure-arrival-row">
+      <label>ARRIVAL (1 full stop)</label>
+      <select class="airport-select">
+        <option>EKAH</option>
+      </select>
+      <span class="day-indicator">DAY</span>
+    </div>
+    <button class="add-landing-btn">+ Add landing</button>
+  </div>
+
+  <!-- Add Flight Button -->
+  <button class="add-flight-btn">+ Add flight</button>
+</div> 

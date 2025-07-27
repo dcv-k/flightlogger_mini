@@ -1,0 +1,73 @@
+<!-- _flights_table.html.erb -->
+<div class="flights-container">
+  <div class="flights-header">
+    <div class="flights-header-content">
+      <div class="flights-date-time">19.03.2021 12:04 (UTC+01:00)</div>
+      <div class="flights-controls">
+        <label class="history-checkbox">
+          <input type="checkbox"> History
+        </label>
+        <div class="arrivals-dropdown">
+          <span>ARRIVALS</span>
+          <span class="dropdown-arrows">↕</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flights-content">
+    <table class="flights-table">
+      <thead>
+      <tr>
+        <th class="sortable">AIRCRAFT ↕</th>
+        <th class="sortable">DEP ↕</th>
+        <th>TYPE</th>
+        <th>STU/REN</th>
+        <th>INS/CREW</th>
+        <th>OBS</th>
+        <th class="sortable">POB ↕</th>
+        <th class="sortable">FUEL ↕</th>
+        <th class="sortable">OFF ↕</th>
+        <th>TIME</th>
+        <th class="sortable">ETA ↕</th>
+        <th class="sortable">ARR ↕</th>
+        <th>COMMENT</th>
+        <th>STATUS</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% flight = Flight.first %>
+      <tr class="flight-row">
+        <td class="flight-aircraft">OY-AAA</td>
+        <td>EKAH</td>
+        <td>Lesson 11 - Solo prep</td>
+        <td>HES - Heather</td>
+        <td>NOR - Kenneth</td>
+        <td></td>
+        <td>3</td>
+        <td>Endurance: 26.1h</td>
+        <td class="flight-time">11:45</td>
+        <td>
+          <div class="time-progress">
+            <div class="progress-bar" style="width: 20%; background-color: #28a745;">
+              <span class="time-text">00:05 left</span>
+            </div>
+          </div>
+        </td>
+        <td class="flight-eta" id="flights-table-eta-<%= flight&.id || 'default' %>">
+          <%= flight&.eta&.strftime("%H:%M") || "12:10" %>
+        </td>
+        <td>EKAH</td>
+        <td></td>
+        <td>
+          <div class="flight-status status-flight">FLIGHT +</div>
+        </td>
+        <td>
+          <button class="edit-btn" title="Edit flight">✏️</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

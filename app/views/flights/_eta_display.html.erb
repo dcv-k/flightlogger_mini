@@ -1,0 +1,10 @@
+<div class="timeline-item eta-item" id="side-panel-eta">
+  <div class="timeline-label">ETA</div>
+  <div class="eta-controls">
+    <button class="eta-btn" onclick="adjustETA(<%= flight.id %>, -5)">-</button>
+    <div class="timeline-time eta-time" id="eta-time-<%= flight.id %>">
+      <%= flight.eta&.strftime("%H:%M") || "12:10" %>
+    </div>
+    <button class="eta-btn" onclick="adjustETA(<%= flight.id %>, 5)">+</button>
+  </div>
+</div>
