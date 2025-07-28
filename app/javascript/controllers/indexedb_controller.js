@@ -26,14 +26,14 @@ export default class extends Controller {
             const getAllRequest = store.getAll();
 
             getAllRequest.onsuccess = () => {
-                console.log("Contents of IndexedDB:", getAllRequest.result);
+                console.log("Contents", getAllRequest.result);
             };
 
             getAllRequest.onerror = () => {
-                console.error("Failed to fetch records from subExercises");
+                console.error("Failed fetch");
             };
         }).catch(error => {
-            console.error("Failed to open database:", error);
+            console.error("Failed to open database", error);
         });
     }
 
@@ -41,7 +41,7 @@ export default class extends Controller {
     save(event) {
         console.log("test on type event");
         const textarea = event.target;
-        const id = parseInt(textarea.dataset.id, 10); // uses 1–11
+        const id = parseInt(textarea.dataset.id, 10);
         const content = textarea.value;
 
         const record = { id, content, updatedAt: new Date().toISOString() };
@@ -51,7 +51,7 @@ export default class extends Controller {
             const store = tx.objectStore("subExercises");
             store.put(record);
         }).catch(error => {
-            console.error("Failed to save to IndexedDB:", error);
+            console.error("Failed to save", error);
         });
     }
     populate() {

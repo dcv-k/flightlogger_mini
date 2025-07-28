@@ -5,7 +5,7 @@ export default class extends Controller {
     static values = { expanded: Boolean }
 
     connect() {
-        console.log("cc c")
+        console.log("cc")
         this.updateDisplay()
     }
 

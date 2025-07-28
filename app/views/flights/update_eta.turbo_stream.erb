@@ -4,7 +4,7 @@
 
 <%= turbo_stream.replace "flights-table-eta-#{@flight.id}" do %>
   <td class="flight-eta" id="flights-table-eta-<%= @flight.id %>">
-    <%= @flight.eta&.strftime("%H:%M") || "12:10" %>
+    <%= @flight.eta&.strftime("%H:%M") || "13:00" %>
   </td>
 <% end %>
 

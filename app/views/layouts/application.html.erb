@@ -12,7 +12,6 @@
 
   <script>
       function adjustETA(flightId, minutes) {
-          // Make a PATCH request to update the ETA
           fetch(`/flights/${flightId}/update_eta`, {
               method: 'PATCH',
               headers: {
@@ -23,17 +22,12 @@
               body: `minutes=${minutes}`
           })
               .then(response => {
-                  console.log('Response status:', response.status);
-                  console.log('Response headers:', response.headers.get('content-type'));
-
                   if (!response.ok) {
                       throw new Error('Network response was not ok');
                   }
                   return response.text();
               })
               .then(html => {
-                  console.log('Received HTML:', html);
-                  // Turbo will automatically handle the stream response
                   if (html.trim()) {
                       Turbo.renderStreamMessage(html);
                   } else {
@@ -43,32 +37,6 @@
               .catch(error => {
                   console.error('Error updating ETA:', error);
               });
-      }
-
-      // Alternative simpler approach using Rails UJS if you prefer
-      function adjustETASimple(flightId, minutes) {
-          const form = document.createElement('form');
-          form.method = 'PATCH';
-          form.action = `/flights/${flightId}/update_eta`;
-          form.style.display = 'none';
-
-          const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-          const csrfInput = document.createElement('input');
-          csrfInput.type = 'hidden';
-          csrfInput.name = 'authenticity_token';
-          csrfInput.value = csrfToken;
-
-          const minutesInput = document.createElement('input');
-          minutesInput.type = 'hidden';
-          minutesInput.name = 'minutes';
-          minutesInput.value = minutes;
-
-          form.appendChild(csrfInput);
-          form.appendChild(minutesInput);
-          document.body.appendChild(form);
-
-          form.submit();
-          document.body.removeChild(form);
       }
   </script>
 </head>

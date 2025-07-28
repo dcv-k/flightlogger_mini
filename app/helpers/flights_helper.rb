@@ -11,7 +11,6 @@ module FlightsHelper
   end
 
   def format_flight_time(time_string)
-    # Add any time formatting logic here
     time_string
   end
 

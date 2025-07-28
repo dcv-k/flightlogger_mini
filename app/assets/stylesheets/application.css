@@ -56,6 +56,15 @@ nav {
     justify-content: center;
     align-items: center;
 }
+
+#pdf-modal-content {
+    overflow: hidden;
+}
+
+#pdf-modal-content iframe {
+    overflow: hidden;
+}
+
 nav a {
     color: white;
     margin-right: 2rem;
