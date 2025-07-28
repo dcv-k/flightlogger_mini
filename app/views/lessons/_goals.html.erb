@@ -1,42 +1,476 @@
-<h2>Goals Content Here</h2>
-<p>Lesson goals and grading info.</p>
-
-<div class="section">
-  <div class="section-title">Lesson Goals</div>
-  <div class="section-content">
-    <ul class="objectives-list">
-      <li>Complete pre-flight inspection</li>
-      <li>Practice engine start procedures</li>
-      <li>Improve taxiing skills</li>
-      <li>Prepare for solo flight</li>
-    </ul>
+<div class="exercises-container" data-controller="exercises">
+  <div class="exercises-header">
+    <h3>
+      <span class="toggle-icon">▼</span>
+      EXERCISES
+    </h3>
+    <div class="header-actions">
+      <button data-controller="indexedb" data-action="click->indexedb#logAll" class="action-button">Sync</button>
+      <span class="chart-icon">📊</span>
+      <span class="action-button">G</span>
+      <span class="menu-dots">⋮</span>
+    </div>
   </div>
-</div>
 
-<div class="section">
-  <div class="section-title">Assessment Criteria</div>
-  <div class="section-content">
-    <div class="grading-levels">
-      <div class="grading-level level-1">
-        <div class="level-title">Level 1: Unsatisfactory</div>
-        Student requires significant assistance and makes multiple errors in basic procedures.
+  <div class="exercises-list">
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">R/T procedures</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">4</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
       </div>
-      <div class="grading-level level-2">
-        <div class="level-title">Level 2: Satisfactory</div>
-        Student demonstrates basic competency with some instructor guidance.
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
       </div>
-      <div class="grading-level level-3">
-        <div class="level-title">Level 3: Good</div>
-        Student performs well with minimal instructor input.
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible" data-collapsible-expanded-value="true">
+      <div class="exercise-row expandable expanded" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▼</span>
+        <span class="exercise-name">Start up procedures</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">4</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
       </div>
-      <div class="grading-level level-4">
-        <div class="level-title">Level 4: Very Good</div>
-        Student demonstrates excellent understanding and execution.
+      <div class="sub-exercise-container" data-collapsible-target="content">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
       </div>
-      <div class="grading-level level-5">
-        <div class="level-title">Level 5: Excellent</div>
-        Student performs at a standard suitable for solo flight.
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Engine fire on ground</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">2</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Takeoff</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">4</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Engine failure during takeoff</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">4</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Climb out</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">4</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Engine failure</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">2</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Field landing</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">3</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Approach</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">3</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Glide landing clean</span>
+        <div class="exercise-stats">
+          <span class="stat-number blue">2</span>
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-item" data-controller="collapsible">
+      <div class="exercise-row expandable" data-action="click->collapsible#toggle">
+        <span class="expand-arrow" data-collapsible-target="arrow">▶</span>
+        <span class="exercise-name">Glide landing landing conf.</span>
+        <div class="exercise-stats">
+          <span class="stat-number">3</span>
+          <span class="menu-dots">⋮</span>
+        </div>
+      </div>
+      <div class="sub-exercise-container" data-collapsible-target="content" style="display: none;">
+        <div class="sub-exercise">
+          <div class="sub-exercise-header">
+            <textarea class="sub-exercise-name" data-controller="indexedb" data-indexedb-target="name" data-action="input->indexedb#save" data-id="2"></textarea>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-step completed">1</div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-step active">3</div>
+            <div class="progress-step">4</div>
+            <div class="progress-step">5</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div> 
+</div>
+
+<style>
+    .exercises-container {
+        background: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .exercises-header {
+        background: #e8f4f8;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .exercises-header h3 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .toggle-icon {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .action-button {
+        background: #007bff;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .menu-dots {
+        color: #666;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .exercises-list {
+        background: white;
+    }
+
+    .exercise-row {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
+        background: #f0f8e8;
+        cursor: pointer;
+    }
+
+    .exercise-row:hover {
+        background: #e8f5e0;
+    }
+
+    .expand-arrow {
+        margin-right: 8px;
+        font-size: 12px;
+        color: #666;
+        transition: transform 0.2s;
+    }
+
+    .expanded .expand-arrow {
+        transform: rotate(90deg);
+    }
+
+    .exercise-name {
+        flex: 1;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .exercise-stats {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .stat-number {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .stat-number.blue {
+        color: #007bff;
+    }
+
+    .sub-exercise-container {
+        background: white;
+        border-bottom: 1px solid #eee;
+        transition: all 0.3s ease;
+    }
+
+    .sub-exercise {
+        padding: 16px;
+    }
+
+    .sub-exercise-header {
+        margin-bottom: 12px;
+    }
+
+    .sub-exercise-name {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .progress-bar {
+        display: flex;
+        gap: 8px;
+    }
+
+    .progress-step {
+        width: 32px;
+        height: 32px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 500;
+        background: white;
+        color: #666;
+    }
+
+    .progress-step.completed {
+        background: #e8f5e0;
+        border-color: #28a745;
+        color: #28a745;
+    }
+
+    .progress-step.active {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #28a745;
+        font-weight: 700;
+    }
+
+    .chart-icon {
+        font-size: 16px;
+        color: #666;
+    }
+    /* Include your original CSS styles from earlier, and replace this block: */
+    .sub-exercise-name {
+        font-size: 14px;
+        color: #333;
+        width: 100%;
+        resize: vertical;
+        min-height: 32px;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>

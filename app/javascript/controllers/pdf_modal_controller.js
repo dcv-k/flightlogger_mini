@@ -4,12 +4,7 @@ export default class extends Controller {
     static targets = ["modal", "viewer"]
 
     connect() {
-        // just for debugging
-        console.log("PDF Modal controller connected");
-
-        // document.querySelectorAll('[data-action="click->pdfmodal#open"]').forEach(el => {
-        //     console.log("Found clickable PDF link:", el);
-        // });
+        console.log("pdf controller connected")
     }
 
     open(event) {

@@ -2,9 +2,18 @@
   <%= render 'flights/eta_display', flight: @flight %>
 <% end %>
 
-<!-- Update the table ETA cell -->
 <%= turbo_stream.replace "flights-table-eta-#{@flight.id}" do %>
   <td class="flight-eta" id="flights-table-eta-<%= @flight.id %>">
     <%= @flight.eta&.strftime("%H:%M") || "12:10" %>
+  </td>
+<% end %>
+
+<%= turbo_stream.replace "flights-table-progress-#{@flight.id}" do %>
+  <td id="flights-table-progress-<%= @flight.id %>">
+    <div class="time-progress">
+      <div class="progress-bar" style="width: <%= calculate_progress(@flight) %>%; background-color: #28a745;">
+        <span class="time-text"><%= calculate_time_left(@flight) %></span>
+      </div>
+    </div>
   </td>
 <% end %>

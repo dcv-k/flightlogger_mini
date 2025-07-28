@@ -74,16 +74,16 @@
 </head>
 
 <body>
-<%= render 'lessons/header_nav' %>
+<%= render 'shared/header_nav' %>
 
 <main>
-  <%= render 'lessons/side_panel' %>
+  <%= render 'shared/side_panel' %>
   <div id="tab-panel" data-controller="tabs">
     <div class="tab-buttons">
       <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="briefing" class="active">Briefing</button>
-      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="goals">Goals</button>
-      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flight-info">Flight Info</button>
-      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flights">Flights</button>
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="goals">Grades</button>
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flight-info">Flight</button>
+      <button data-tabs-target="button" data-action="click->tabs#switchTab" data-tab="flights">Flights Details</button>
     </div>
 
     <section data-tabs-target="content" data-tab="briefing">
